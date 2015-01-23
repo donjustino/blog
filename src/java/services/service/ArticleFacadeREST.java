@@ -68,7 +68,6 @@ public class ArticleFacadeREST extends AbstractFacade<Article> {
     @Override
     @Produces({"application/xml", "application/json"})
     public List<Article> findAll() {
-        gestionnairesArticle.creerArticleTest();
         return super.findAll();
     }
 
@@ -94,5 +93,6 @@ public class ArticleFacadeREST extends AbstractFacade<Article> {
     public void persist(Object object) {
         em.persist(object);
     }
+    
     
 }
