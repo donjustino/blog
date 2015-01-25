@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package utilisateur.entities.service.service;
+package services.service;
 
-import commentaire.Commentaire;
-import commentaire.GestionnaireCommentaire;
+import commentaire.Comment;
+import commentaire.Comment;
+import commentaire.service.AbstractFacade;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,28 +26,26 @@ import javax.ws.rs.Produces;
  * @author Justin
  */
 @Stateless
-@Path("commentaire.commentaire")
-public class CommentaireFacadeREST extends AbstractFacade<Commentaire> {
-    @EJB
-    private GestionnaireCommentaire gestionnairesCommentaire;
+@Path("commentaire.comment")
+public class CommentFacadeREST extends AbstractFacade<Comment> {
     @PersistenceContext(unitName = "BlogPU")
     private EntityManager em;
 
-    public CommentaireFacadeREST() {
-        super(Commentaire.class);
+    public CommentFacadeREST() {
+        super(Comment.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Commentaire entity) {
+    public void create(Comment entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Commentaire entity) {
+    public void edit(@PathParam("id") Integer id, Comment entity) {
         super.edit(entity);
     }
 
@@ -60,22 +58,21 @@ public class CommentaireFacadeREST extends AbstractFacade<Commentaire> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Commentaire find(@PathParam("id") Integer id) {
-             return super.find(id);
+    public Comment find(@PathParam("id") Integer id) {
+        return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<Commentaire> findAll() {
-        gestionnairesCommentaire.creerCommentaireTest();
+    public List<Comment> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<Commentaire> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Comment> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

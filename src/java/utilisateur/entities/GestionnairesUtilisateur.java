@@ -32,13 +32,13 @@ public class GestionnairesUtilisateur {
         creeUtilisateur("Georges", "Harisson", "georgesH","test");  
     }  
   
-    public Utilisateur creeUtilisateur(String nom, String prenom, String login, String password) {  
-        Utilisateur u = new Utilisateur(nom, prenom, login,password);  
+    public Users creeUtilisateur(String nom, String prenom, String login, String password) {  
+        Users u = new Users(nom, prenom, login,password);  
         em.persist(u);  
         return u;  
     }  
   
-    public Collection<Utilisateur> getAllUsers() {  
+    public Collection<Users> getAllUsers() {  
         // Exécution d'une requête équivalente à un select *  
         Query q = em.createQuery("select u from Utilisateur u");  
         return q.getResultList();  

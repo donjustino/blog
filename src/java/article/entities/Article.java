@@ -5,13 +5,20 @@
  */
 package article.entities;
 
+import commentaire.Comment;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
+import utilisateur.entities.Users;
 
 /**
  *
@@ -26,24 +33,64 @@ public class Article implements Serializable {
     private int id;
     private String title;
     private String keyword;
-    private String published_on;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date published_on;
     private String content;
     private String photo;
     private String position_longitude;
     private String position_latitude;
     private String position_name;
     private int idauthors;
-    private int status;
+    private Status status;
     private int idcomments;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Comment> comments;
+    @ManyToOne
+    private Users ecritpar;
+
+    public Date getPublished_on() {
+        return published_on;
+    }
+
+    public void setPublished_on(Date published_on) {
+        this.published_on = published_on;
+    }
+
+    
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Users getEcritpar() {
+        return ecritpar;
+    }
+
+    public void setEcritpar(Users ecritpar) {
+        this.ecritpar = ecritpar;
+    }
     
     public Article(){
         
     }
     
-    public Article(String titre,String motclef,String article){
+    public Article(String titre,String motclef,String article,Users use){
             this.title = titre;
             this.keyword = motclef;
             this.content = article;
+            this.ecritpar = use;
     }
     public String getTitle() {
         return title;
@@ -108,14 +155,6 @@ public class Article implements Serializable {
 
     public void setIdauthors(int idauthors) {
         this.idauthors = idauthors;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public int getIdcomments() {

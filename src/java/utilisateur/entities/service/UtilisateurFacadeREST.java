@@ -22,7 +22,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import org.glassfish.enterprise.concurrent.internal.Util;
 import utilisateur.entities.GestionnairesUtilisateur;
-import utilisateur.entities.Utilisateur;
+import utilisateur.entities.Users;
 
 /**
  *
@@ -30,7 +30,7 @@ import utilisateur.entities.Utilisateur;
  */
 @Stateless
 @Path("utilisateur.entities.utilisateur")
-public class UtilisateurFacadeREST extends AbstractFacade<Utilisateur> {
+public class UtilisateurFacadeREST extends AbstractFacade<Users> {
     @EJB
     private GestionnairesUtilisateur gestionnairesUtilisateur;
     @PersistenceContext(unitName = "BlogPU")
@@ -38,20 +38,20 @@ public class UtilisateurFacadeREST extends AbstractFacade<Utilisateur> {
     
 
     public UtilisateurFacadeREST() {
-        super(Utilisateur.class);
+        super(Users.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Utilisateur entity) {
+    public void create(Users entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Utilisateur entity) {
+    public void edit(@PathParam("id") Integer id, Users entity) {
         super.edit(entity);
     }
 
@@ -64,14 +64,14 @@ public class UtilisateurFacadeREST extends AbstractFacade<Utilisateur> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Utilisateur find(@PathParam("id") Integer id) {
+    public Users find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public List<Utilisateur> findAll() {
+    public List<Users> findAll() {
         gestionnairesUtilisateur.creerUtilisateursDeTest();
         return super.findAll();
     }
@@ -79,7 +79,7 @@ public class UtilisateurFacadeREST extends AbstractFacade<Utilisateur> {
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public List<Utilisateur> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Users> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 
@@ -127,9 +127,9 @@ public class UtilisateurFacadeREST extends AbstractFacade<Utilisateur> {
         if (q.getResultList().isEmpty()) {
             return null;
         } else {
-            Utilisateur u = (Utilisateur) q.getSingleResult();
+            Users u = (Users) q.getSingleResult();
             
-            u.setAuthorizationKey(Utilisateur.randInt(10000, 99999));
+            u.setAuthorizationKey(Users.randInt(10000, 99999));
             return u;
         }
     }
