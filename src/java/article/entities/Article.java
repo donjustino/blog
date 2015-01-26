@@ -92,6 +92,11 @@ public class Article implements Serializable {
             this.content = article;
             this.ecritpar = use;
     }
+    public Article(String titre,String motclef,String article){
+            this.title = titre;
+            this.keyword = motclef;
+            this.content = article;
+    }
     public String getTitle() {
         return title;
     }

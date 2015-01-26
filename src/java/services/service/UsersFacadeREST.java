@@ -74,6 +74,16 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     public List<Users> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
+    
+    @GET
+    @Path("{login}/{password}")
+    @Consumes({"application/xml", "application/json"})
+    public boolean check(Users entity,@PathParam("login") String login, @PathParam("password") String password){
+        System.out.println(login + password);
+        return true;
+    }
+    
+    
 
     @GET
     @Path("count")

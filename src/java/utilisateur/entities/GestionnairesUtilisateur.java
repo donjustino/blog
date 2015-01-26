@@ -37,6 +37,26 @@ public class GestionnairesUtilisateur {
         em.persist(u);  
         return u;  
     }  
+    
+    public Collection<Users> checkUser(String login){
+        System.out.println("Login :" + login);
+         Query q = em.createQuery("select u from Users u where u.username =:login");
+        q.setParameter("login", login); 
+        System.out.println("Requete :" + q.getResultList());
+        return q.getResultList();
+    }
+    
+     public Boolean checkUser(String login, String password){
+        System.out.println("Login :" + login);
+         Query q = em.createQuery("select u from Users u where u.username =:login and u.password =:password");
+        q.setParameter("password", password);
+        q.setParameter("login", login); 
+        if (q.getResultList().isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
   
     public Collection<Users> getAllUsers() {  
         // Exécution d'une requête équivalente à un select *  

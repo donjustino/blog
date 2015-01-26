@@ -32,6 +32,11 @@ public class GestionnairesArticle {
             em.persist(a);
             return a;
     }
+     public Article creerArticle(String titre, String keyword, String article){
+            Article a = new Article(titre,keyword,article);
+            em.persist(a);
+            return a;
+    }
     public Collection<Article> getAllArticle(){
         Query q = em.createQuery("select u from Article u");  
         return q.getResultList();  

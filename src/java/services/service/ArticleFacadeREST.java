@@ -7,6 +7,8 @@ package services.service;
 
 import article.entities.Article;
 import article.entities.GestionnairesArticle;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -15,11 +17,14 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import utilisateur.entities.GestionnairesUtilisateur;
+import utilisateur.entities.Users;
 
 /**
  *
@@ -30,6 +35,9 @@ import javax.ws.rs.Produces;
 public class ArticleFacadeREST extends AbstractFacade<Article> {
     @EJB
     private GestionnairesArticle gestionnairesArticle;
+    @EJB
+    GestionnairesUtilisateur gu;
+
     @PersistenceContext(unitName = "BlogPU")
     private EntityManager em;
 
@@ -38,10 +46,19 @@ public class ArticleFacadeREST extends AbstractFacade<Article> {
     }
     
     @POST
-    @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Article entity) {
-        super.create(entity);
+    public void create(Article entity, @HeaderParam(value = "Users") String use) {
+        System.out.print(use);
+        //for (int i = 0 ; i.)
+        Collection<Users> temp = gu.checkUser(use);
+        Iterator i = temp.iterator();
+        Users usetmp;
+        while(i.hasNext()){
+             usetmp = (Users) i.next();
+              Article art1 = gestionnairesArticle.creerArticle(entity.getTitle(), entity.getKeyword(), entity.getContent(),usetmp);
+        }
+       
+        //super.create(entity);
     }
 
     @PUT
@@ -66,9 +83,9 @@ public class ArticleFacadeREST extends AbstractFacade<Article> {
     }
 
     @GET
-    @Override
     @Produces({"application/xml", "application/json"})
     public List<Article> findAll() {
+
         return super.findAll();
     }
 
@@ -92,6 +109,10 @@ public class ArticleFacadeREST extends AbstractFacade<Article> {
     }
 
     public void persist(Object object) {
+        em.persist(object);
+    }
+
+    public void persist1(Object object) {
         em.persist(object);
     }
     
