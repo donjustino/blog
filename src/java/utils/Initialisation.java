@@ -45,8 +45,13 @@ public class Initialisation {
         List<Comment> comments;
         comments = new ArrayList<>();
         comments.add(c1);
-        
-
         art1.setComments(comments);
+        
+        Users rudy = gu.creeUtilisateur("Ricciardi", "Rudy", "rudyr", "mgs123");
+        Article art2 = art.creerArticle("deuxième titre", "Tag2", "Ceci est le contenu",rudy);
+        Comment c2 = com.creerCommentaire("en revoir", rudy);
+        List<Comment> comments2;
+        comments2 = new ArrayList<>();
+        art2.setComments(comments2);
     }
 }
