@@ -7,6 +7,7 @@ package services.service;
 
 import commentaire.service.AbstractFacade;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +19,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import utilisateur.entities.GestionnairesUtilisateur;
 import utilisateur.entities.Users;
 
 /**
@@ -29,6 +31,8 @@ import utilisateur.entities.Users;
 public class UsersFacadeREST extends AbstractFacade<Users> {
     @PersistenceContext(unitName = "BlogPU")
     private EntityManager em;
+    @EJB
+    GestionnairesUtilisateur gu;
 
     public UsersFacadeREST() {
         super(Users.class);
@@ -75,12 +79,13 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
         return super.findRange(new int[]{from, to});
     }
     
-    @GET
+    @POST
     @Path("{login}/{password}")
     @Consumes({"application/xml", "application/json"})
-    public boolean check(Users entity,@PathParam("login") String login, @PathParam("password") String password){
-        System.out.println(login + password);
-        return true;
+    public boolean check(@PathParam("login") String log,@PathParam("password") String pass){
+        System.out.println("login :" + log + "password :" + pass);
+        boolean test = gu.checkUser(log, pass);
+        return test;
     }
     
     

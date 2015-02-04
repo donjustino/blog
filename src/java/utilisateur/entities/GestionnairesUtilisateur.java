@@ -52,8 +52,10 @@ public class GestionnairesUtilisateur {
         q.setParameter("password", password);
         q.setParameter("login", login); 
         if (q.getResultList().isEmpty()) {
+            System.out.println("Utilisateur inconnu");
             return false;
         } else {
+            System.out.println("Utilisateur connu... OK!");
             return true;
         }
     }
