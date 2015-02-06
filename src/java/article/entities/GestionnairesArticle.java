@@ -41,4 +41,10 @@ public class GestionnairesArticle {
         Query q = em.createQuery("select u from Article u");  
         return q.getResultList();  
     }
+    public Collection<Article> checkArticle(long idart){
+        Query q = em.createQuery("select u from Article u where u.id =:idart");
+        q.setParameter("idart", idart); 
+        System.out.println("Requete :" + q.getResultList());
+        return q.getResultList();  
+    }
 }

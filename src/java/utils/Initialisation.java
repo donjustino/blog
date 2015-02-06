@@ -41,17 +41,17 @@ public class Initialisation {
         System.out.println("BD initialisee");
         Users justin = gu.creeUtilisateur("Mulenet", "Justin", "justinm", "mgs123");
         Article art1 = art.creerArticle("Premier titre", "Tag1", "Ceci est le contenu",justin);
-        Comment c1 = com.creerCommentaire("Coucou", justin);
-        List<Comment> comments;
-        comments = new ArrayList<>();
-        comments.add(c1);
-        art1.setComments(comments);
+        Comment c1 = com.creerCommentaire("Coucou1", justin);
+        Comment c3 = com.creerCommentaire("Coucou2", justin);
+        Comment c4 = com.creerCommentaire("Coucou3", justin);
+     
+        c1.setA_article(art1);
+        c4.setA_article(art1);
+        c3.setA_article(art1);
         
         Users rudy = gu.creeUtilisateur("Ricciardi", "Rudy", "rudyr", "mgs123");
         Article art2 = art.creerArticle("deuxième titre", "Tag2", "Ceci est le contenu",rudy);
         Comment c2 = com.creerCommentaire("en revoir", rudy);
-        List<Comment> comments2;
-        comments2 = new ArrayList<>();
-        art2.setComments(comments2);
+        c2.setA_article(art2);
     }
 }

@@ -91,6 +91,7 @@ public class Article implements Serializable {
             this.keyword = motclef;
             this.content = article;
             this.ecritpar = use;
+            this.published_on = new Date();
     }
     public Article(String titre,String motclef,String article){
             this.title = titre;
@@ -202,6 +203,10 @@ public class Article implements Serializable {
     @Override
     public String toString() {
         return "article.entities.Article[ id=" + id + " ]";
+    }
+
+    private Date Date() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

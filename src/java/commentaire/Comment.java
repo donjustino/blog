@@ -5,6 +5,7 @@
  */
 package commentaire;
 
+import article.entities.Article;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
 import utilisateur.entities.Users;
@@ -21,6 +23,10 @@ import utilisateur.entities.Users;
  * @author Justin
  */
 @Entity
+@NamedQuery(
+    name="findCommentByArticle",
+    query="SELECT c FROM Comment c WHERE c.a_article.id = :article"
+)
 @XmlRootElement
 public class Comment  implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -32,6 +38,16 @@ public class Comment  implements Serializable {
     private Date commented_date;
     @ManyToOne
     private Users commentepar;
+     @ManyToOne 
+    private Article a_article;
+
+    public Article getA_article() {
+        return a_article;
+    }
+
+    public void setA_article(Article a_article) {
+        this.a_article = a_article;
+    }
     
     
     public Comment(){

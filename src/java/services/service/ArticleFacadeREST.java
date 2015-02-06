@@ -71,7 +71,6 @@ public class ArticleFacadeREST extends AbstractFacade<Article> {
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
-        System.out.println("test del");
         super.remove(super.find(id));
     }
 

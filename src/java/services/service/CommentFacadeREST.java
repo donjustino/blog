@@ -5,13 +5,19 @@
  */
 package services.service;
 
+import article.entities.Article;
+import article.entities.GestionnairesArticle;
 import commentaire.Comment;
-import commentaire.Comment;
+import commentaire.GestionnaireCommentaire;
 import commentaire.service.AbstractFacade;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -20,6 +26,8 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import utilisateur.entities.GestionnairesUtilisateur;
+import utilisateur.entities.Users;
 
 /**
  *
@@ -28,18 +36,47 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("commentaire.comment")
 public class CommentFacadeREST extends AbstractFacade<Comment> {
+
     @PersistenceContext(unitName = "BlogPU")
     private EntityManager em;
+    @EJB
+    GestionnairesUtilisateur gu;
+    @EJB
+    GestionnairesArticle art;
+    @EJB
+    GestionnaireCommentaire cmt;
 
     public CommentFacadeREST() {
         super(Comment.class);
     }
 
     @POST
-    @Override
+    @Path("/{id}")
     @Consumes({"application/xml", "application/json"})
-    public void create(Comment entity) {
-        super.create(entity);
+    public void create(Comment entity, @PathParam("id") long id) {
+        Collection<Article> temp = art.checkArticle(id);
+        Collection<Users> tempuse = gu.checkUser(entity.getCommentepar().getUsername());
+        System.out.println(entity.getComment());
+        System.out.println(entity.getCommentepar().getUsername());
+        System.out.println(temp);
+
+        Article arttmp;
+        Users usetmp;
+        Iterator i = temp.iterator();
+
+        Iterator j = tempuse.iterator();
+
+        while (j.hasNext()) {
+            usetmp = (Users) j.next();
+            while (i.hasNext()) {
+                arttmp = (Article) i.next();
+                Comment c1 = cmt.creerCommentaire(entity.getComment(), usetmp);
+                c1.setA_article(arttmp);
+            }
+
+        }
+
+        //super.create(entity);
     }
 
     @PUT
@@ -83,9 +120,18 @@ public class CommentFacadeREST extends AbstractFacade<Comment> {
         return String.valueOf(super.count());
     }
 
+    @GET
+    @Path("search/{id}")
+    @Produces({"application/json"})
+    public List<Comment> findCommentByArticle(@PathParam("id") long id) {
+        Query q = em.createNamedQuery("findCommentByArticle");
+        q.setParameter("article", id);
+        return q.getResultList();
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }
