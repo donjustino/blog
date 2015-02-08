@@ -87,6 +87,7 @@ public class UtilisateurFacadeREST extends AbstractFacade<Users> {
     @Path("count")
     @Produces("text/plain")
     public String countREST() {
+        System.out.println("test");
         return String.valueOf(super.count());
     }
 
@@ -118,6 +119,7 @@ public class UtilisateurFacadeREST extends AbstractFacade<Users> {
     @Path("/check")
     @Produces({"application/json"})
     public Object authUser(@FormParam("user") String user, @FormParam("mdp") String mdp) {
+        System.out.println("test verif fonct :" + user);
 
         Query q = em.createNamedQuery("findUserByUsernameAndPassword");
 
@@ -133,4 +135,6 @@ public class UtilisateurFacadeREST extends AbstractFacade<Users> {
             return u;
         }
     }
+    
+
 }

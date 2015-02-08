@@ -32,6 +32,11 @@ public class GestionnairesArticle {
             em.persist(a);
             return a;
     }
+    public Article creerArticle(String titre, String keyword, String article, Users use,String image){
+            Article a = new Article(titre,keyword,article,use,image);
+            em.persist(a);
+            return a;
+    }
      public Article creerArticle(String titre, String keyword, String article){
             Article a = new Article(titre,keyword,article);
             em.persist(a);

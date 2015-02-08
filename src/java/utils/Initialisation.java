@@ -38,6 +38,7 @@ public class Initialisation {
 
     @PostConstruct // Appel après constructeur
     public void initialize() {
+     
         System.out.println("BD initialisee");
         Users justin = gu.creeUtilisateur("Mulenet", "Justin", "justinm", "mgs123");
         Article art1 = art.creerArticle("Premier titre", "Tag1", "Ceci est le contenu",justin);
@@ -53,5 +54,6 @@ public class Initialisation {
         Article art2 = art.creerArticle("deuxième titre", "Tag2", "Ceci est le contenu",rudy);
         Comment c2 = com.creerCommentaire("en revoir", rudy);
         c2.setA_article(art2);
+             
     }
 }

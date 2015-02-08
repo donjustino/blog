@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -101,6 +102,19 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    @GET
+    @Path("/mod/{user}")
+    @Produces({"application/json"})
+    public Object ckhUser(@PathParam("user") String user) {
+        //Users use = (Users) gu.checkUser(user);
+        //System.out.println(use.getUsername());
+        //return use;
+          Query q = em.createQuery("select u from Users u where u.username =:login");
+        q.setParameter("login", user); 
+        System.out.println("Requete :" + q.getResultList());
+        return q.getResultList();
     }
     
 }

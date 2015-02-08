@@ -41,6 +41,7 @@ public class ArticleFacadeREST extends AbstractFacade<Article> {
     @PersistenceContext(unitName = "BlogPU")
     private EntityManager em;
 
+    private int count = 0;
     public ArticleFacadeREST() {
         super(Article.class);
     }
@@ -48,6 +49,8 @@ public class ArticleFacadeREST extends AbstractFacade<Article> {
     @POST
     @Consumes({"application/xml", "application/json"})
     public void create(Article entity, @HeaderParam(value = "Users") String use) {
+        count = count +1;
+        System.out.print("Comptage :" + count);
         System.out.print(use);
         //for (int i = 0 ; i.)
         Collection<Users> temp = gu.checkUser(use);
@@ -55,7 +58,7 @@ public class ArticleFacadeREST extends AbstractFacade<Article> {
         Users usetmp;
         while(i.hasNext()){
              usetmp = (Users) i.next();
-              Article art1 = gestionnairesArticle.creerArticle(entity.getTitle(), entity.getKeyword(), entity.getContent(),usetmp);
+              Article art1 = gestionnairesArticle.creerArticle(entity.getTitle(), entity.getKeyword(), entity.getContent(),usetmp,entity.getPhoto());
         }
        
         //super.create(entity);

@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -35,7 +36,9 @@ public class Article implements Serializable {
     private String keyword;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date published_on;
+    @Lob
     private String content;
+    @Lob
     private String photo;
     private String position_longitude;
     private String position_latitude;
@@ -92,6 +95,14 @@ public class Article implements Serializable {
             this.content = article;
             this.ecritpar = use;
             this.published_on = new Date();
+    }
+      public Article(String titre,String motclef,String article,Users use,String image){
+            this.title = titre;
+            this.keyword = motclef;
+            this.content = article;
+            this.ecritpar = use;
+            this.published_on = new Date();
+            this.photo = image;
     }
     public Article(String titre,String motclef,String article){
             this.title = titre;
