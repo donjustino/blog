@@ -90,6 +90,8 @@ public class Initialisation {
     c1.setStatus(true);
     c2.setStatus(true);
     c3.setStatus(true);
+    justin.setStatus(true);
+    rudy.setStatus(true);
     }
    
 }

@@ -52,7 +52,7 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Integer id, Users entity) {
-        System.out.println("test put" + id);
+        entity.setStatus(true);
         super.edit(entity);
     }
 

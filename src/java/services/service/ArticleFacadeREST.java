@@ -86,7 +86,8 @@ public class ArticleFacadeREST extends AbstractFacade<Article> {
                 if(entity.getPublished_on() == null){
                     entity.setPublished_on(arttemp.getPublished_on());
                 }
-                 if(entity.getPhoto() == null){
+                System.out.println(entity.getPhoto());
+                 if(entity.getPhoto().equals("null")){
                     entity.setPhoto(arttemp.getPhoto());
                 }
                 usetmp = (Users) i.next();
