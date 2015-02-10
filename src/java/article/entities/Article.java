@@ -44,7 +44,7 @@ public class Article implements Serializable {
     private String position_latitude;
     private String position_name;
     private int idauthors;
-    private Status status;
+    private boolean status = false;
     private int idcomments;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments;
@@ -61,11 +61,11 @@ public class Article implements Serializable {
 
     
 
-    public Status getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

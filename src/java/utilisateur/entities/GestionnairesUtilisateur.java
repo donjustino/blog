@@ -65,5 +65,25 @@ public class GestionnairesUtilisateur {
         Query q = em.createQuery("select u from Utilisateur u");  
         return q.getResultList();  
     }  
+     public Collection<Users> checkID(int id){
+        Query q = em.createQuery("select u from Users u where u.id =:id");
+        q.setParameter("id", id); 
+        System.out.println("Requete :" + q.getResultList());
+        return q.getResultList();
+    }
+     public void validerUtilisateur(int id){
+         System.out.println("Utilisateur validé");
+        Query q = em.createQuery("select u from Users u where u.id =:id");
+        q.setParameter("id", id);
+        Users u = (Users) q.getSingleResult();
+        u.setStatus(true);
+    }
+    public void DesactiverUtilisateur(int id){
+        System.out.println("Utilisateur désactivé");
+        Query q = em.createQuery("select u from Users u where u.id =:id");
+        q.setParameter("id", id);
+        Users u = (Users) q.getSingleResult();
+        u.setStatus(false);
+    }
     
 }

@@ -46,10 +46,34 @@ public class GestionnairesArticle {
         Query q = em.createQuery("select u from Article u");  
         return q.getResultList();  
     }
+      public Collection<Article> getAllArticleValid(){
+        Query q = em.createQuery("select u from Article u where u.status =true");  
+        return q.getResultList();  
+    }
     public Collection<Article> checkArticle(long idart){
         Query q = em.createQuery("select u from Article u where u.id =:idart");
         q.setParameter("idart", idart); 
         System.out.println("Requete :" + q.getResultList());
         return q.getResultList();  
     }
+    public Collection<Article> checkArticleUser(long iduse){
+        Query q = em.createQuery("select u from Article u where u.ecritpar.id =:iduse");
+        q.setParameter("iduse", iduse); 
+        System.out.println("Requete :" + q.getResultList().toString());
+      
+        return q.getResultList();  
+    }
+    public void validerArticle(int id){
+        Query q = em.createQuery("select u from Article u where u.id =:id");
+        q.setParameter("id", id);
+        Article u = (Article) q.getSingleResult();
+        u.setStatus(true);
+    }
+    public void DesactiverArticle(int id){
+        Query q = em.createQuery("select u from Article u where u.id =:id");
+        q.setParameter("id", id);
+        Article u = (Article) q.getSingleResult();
+        u.setStatus(false);
+    }
+    
 }

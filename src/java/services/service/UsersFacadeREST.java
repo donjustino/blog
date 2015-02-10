@@ -30,6 +30,7 @@ import utilisateur.entities.Users;
 @Stateless
 @Path("utilisateur.entities.users")
 public class UsersFacadeREST extends AbstractFacade<Users> {
+
     @PersistenceContext(unitName = "BlogPU")
     private EntityManager em;
     @EJB
@@ -51,6 +52,7 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Integer id, Users entity) {
+        System.out.println("test put" + id);
         super.edit(entity);
     }
 
@@ -80,17 +82,21 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     public List<Users> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
-    
+
     @POST
     @Path("{login}/{password}")
     @Consumes({"application/xml", "application/json"})
-    public boolean check(@PathParam("login") String log,@PathParam("password") String pass){
+    public Object check(@PathParam("login") String log, @PathParam("password") String pass) {
         System.out.println("login :" + log + "password :" + pass);
         boolean test = gu.checkUser(log, pass);
-        return test;
+        if(test == true){
+             Query q = em.createQuery("select u from Users u where u.username =:login");
+             q.setParameter("login", log);
+             System.out.println("Requete :" + q.getResultList());
+             return q.getResultList();
+        }
+         return null;
     }
-    
-    
 
     @GET
     @Path("count")
@@ -103,7 +109,7 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
     @GET
     @Path("/mod/{user}")
     @Produces({"application/json"})
@@ -111,10 +117,37 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
         //Users use = (Users) gu.checkUser(user);
         //System.out.println(use.getUsername());
         //return use;
-          Query q = em.createQuery("select u from Users u where u.username =:login");
-        q.setParameter("login", user); 
+        Query q = em.createQuery("select u from Users u where u.username =:login");
+        q.setParameter("login", user);
         System.out.println("Requete :" + q.getResultList());
         return q.getResultList();
     }
-    
+
+    @GET
+    @Path("/valid/{id}")
+    @Produces({"application/xml", "application/json"})
+    public Boolean validArticle(@PathParam("id") Integer id) {
+        System.out.println("fonction ok");
+        gu.validerUtilisateur(id);
+        return true;
+    }
+
+    @GET
+    @Path("/disabled/{id}")
+    @Produces({"application/xml", "application/json"})
+    public Boolean disabledArticle(@PathParam("id") Integer id) {
+        System.out.println("fonction ok");
+        gu.DesactiverUtilisateur(id);
+        return true;
+    }
+    @GET
+    @Path("/stat")
+    @Produces({"application/xml", "application/json"})
+    public List<Users> findMostArticle() {
+        Query q = em.createQuery("select COUNT(u) from Users u where u.status = true ");
+        System.out.println("Requete :" + q.getResultList().toString());
+
+        return q.getResultList();
+    }
+
 }

@@ -100,10 +100,12 @@ public class CommentFacadeREST extends AbstractFacade<Comment> {
     }
 
     @GET
-    @Override
+    @Path("/admin")
     @Produces({"application/xml", "application/json"})
-    public List<Comment> findAll() {
-        return super.findAll();
+    public List<Comment> findCommentaire() {
+        System.out.println("listage 2");
+        return (List<Comment>) cmt.getAllCommentaireValid();
+        //return super.findAll();
     }
 
     @GET
@@ -124,6 +126,7 @@ public class CommentFacadeREST extends AbstractFacade<Comment> {
     @Path("search/{id}")
     @Produces({"application/json"})
     public List<Comment> findCommentByArticle(@PathParam("id") long id) {
+        System.out.println("fonction ok");
         Query q = em.createNamedQuery("findCommentByArticle");
         q.setParameter("article", id);
         return q.getResultList();
@@ -132,6 +135,44 @@ public class CommentFacadeREST extends AbstractFacade<Comment> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+
+    @GET
+    @Path("/valid/{id}")
+    @Produces({"application/xml", "application/json"})
+    public Boolean validArticle(@PathParam("id") Integer id) {
+        System.out.println("fonction ok");
+        cmt.validerCommentaire(id);
+        return true;
+    }
+
+    @GET
+    @Path("/disabled/{id}")
+    @Produces({"application/xml", "application/json"})
+    public Boolean disabledArticle(@PathParam("id") Integer id) {
+        System.out.println("fonction ok");
+        cmt.DesactiverCommentaire(id);
+        return true;
+    }
+
+    @GET
+    @Override
+    @Produces({"application/xml", "application/json"})
+    public List<Comment> findAll() {
+        System.out.println("listage");
+        return super.findAll();
+        //System.out.println("listage");
+        //return (List<Comment>) cmt.getAllCommentaireValid();
+    }
+
+    @GET
+    @Path("/stat")
+    @Produces({"application/xml", "application/json"})
+    public List<Article> findMostArticle() {
+        Query q = em.createQuery("select COUNT(u) from Comment u where u.status = true ");
+        System.out.println("Requete :" + q.getResultList().toString());
+
+        return q.getResultList();
     }
 
 }

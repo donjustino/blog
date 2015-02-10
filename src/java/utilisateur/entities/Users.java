@@ -38,6 +38,9 @@ public class Users implements Serializable {
     private String password;
     private String last_connected;
     private int authorizationKey;
+    private boolean status =false;
+    
+    
     
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "ecritpar")
     private List<Article> articles;
@@ -191,4 +194,13 @@ public class Users implements Serializable {
 
         return randomNum;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
 }

@@ -33,7 +33,23 @@ public class GestionnaireCommentaire {
             return c;
     }
     public Collection<Comment> getAllCommentaire(){
+        Query q = em.createQuery("select u from Comment u where u.status =true");  
+        return q.getResultList();  
+    }
+    public Collection<Comment> getAllCommentaireValid(){
         Query q = em.createQuery("select u from Comment u");  
         return q.getResultList();  
+    }
+     public void validerCommentaire(int id){
+        Query q = em.createQuery("select u from Comment u where u.id =:id");
+        q.setParameter("id", id);
+        Comment u = (Comment) q.getSingleResult();
+        u.setStatus(true);
+    }
+    public void DesactiverCommentaire(int id){
+        Query q = em.createQuery("select u from Comment u where u.id =:id");
+        q.setParameter("id", id);
+        Comment u = (Comment) q.getSingleResult();
+        u.setStatus(false);
     }
 }

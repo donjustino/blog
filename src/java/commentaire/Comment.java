@@ -25,7 +25,7 @@ import utilisateur.entities.Users;
 @Entity
 @NamedQuery(
     name="findCommentByArticle",
-    query="SELECT c FROM Comment c WHERE c.a_article.id = :article"
+    query="SELECT c FROM Comment c WHERE c.a_article.id = :article and c.status =true"
 )
 @XmlRootElement
 public class Comment  implements Serializable {
@@ -40,9 +40,18 @@ public class Comment  implements Serializable {
     private Users commentepar;
      @ManyToOne 
     private Article a_article;
+    private boolean status = false;
 
     public Article getA_article() {
         return a_article;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public void setA_article(Article a_article) {
